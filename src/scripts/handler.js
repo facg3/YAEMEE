@@ -1,11 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const data = require('../db/queries/db_functions');
+// const post = require('../db/queries/post_functions');
+// const user = require('../db/queries/user_functions');
 
-const queryString = require('querystring');
-
-const HomePage = (request, response) => {
-  fs.readFile(path.join(__dirname, '..', '..', 'public', 'login.html'), (error, file) => {
+const homePage = (request, response) => {
+  fs.readFile(path.join(__dirname, '..', '..', 'public', 'html', 'login.html'), (error, file) => {
     if (error) {
       response.writeHead(500, { 'content-Type': 'text/html' });
       response.end('<h1> Internal server Error </h1>');
@@ -36,17 +35,17 @@ const generic = (request, response) => {
   });
 };
 module.exports = {
-  HomePage,
+  homePage,
   generic,
-  login,
-  profiles,
-  addPost,
-  editPost,
-  likePost,
-  deletePost,
-  comment,
-  adminPanel,
-  addUser,
-  deleteUser,
+  // login,
+  // profiles,
+  // addPost,
+  // editPost,
+  // likePost,
+  // deletePost,
+  // comment,
+  // adminPanel,
+  // addUser,
+  // deleteUser,
 
 };
