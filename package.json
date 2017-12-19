@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tape src/scripts/tests/tests.js && node src/db/tests/build.js && tape src/db/tests/tests.js",
     "start": "node src/scripts/server.js",
     "watch": "nodemon src/scripts/server.js"
   },
