@@ -5,7 +5,7 @@ const data = require('../db/queries/db_functions');
 const queryString = require('querystring');
 
 const HomePage = (request, response) => {
-  fs.readFile(path.join(__dirname, '..', '..', 'public', 'index.html'), (error, file) => {
+  fs.readFile(path.join(__dirname, '..', '..', 'public', 'login.html'), (error, file) => {
     if (error) {
       response.writeHead(500, { 'content-Type': 'text/html' });
       response.end('<h1> Internal server Error </h1>');
@@ -38,5 +38,15 @@ const generic = (request, response) => {
 module.exports = {
   HomePage,
   generic,
+  login,
+  profiles,
+  addPost,
+  editPost,
+  likePost,
+  deletePost,
+  comment,
+  adminPanel,
+  addUser,
+  deleteUser,
 
 };
