@@ -2,9 +2,9 @@ const handlers = require('./handler.js');
 
 const router = (req, res) => {
   const endpoint = req.url;
-  if (endpoint === '') {
-    handlers.HomePage(req, res);
-  } else if (endpoint.startsWith('/public/') {
+  if (endpoint === '/') {
+    handlers.homePage(req, res);
+  } else if (endpoint.startsWith('/public/')) {
     handlers.generic(req, res);
   } else if (endpoint === '/login/') {
     handlers.login(req, res);
@@ -27,8 +27,8 @@ const router = (req, res) => {
   } else if (endpoint === '/delete_user/') {
     handlers.deleteUser(req, res);
   } else {
-    res.writeHead(404, {'Content-Type':'text/html'});
-    res.end(`<h1> Path doesn't exist.</h1>`);
+    res.writeHead(404, { 'Content-Type': 'text/html' });
+    res.end('<h1> Path doesn\'t exist.</h1>');
   }
 };
 module.exports = router;
