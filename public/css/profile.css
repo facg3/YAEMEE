@@ -58,7 +58,21 @@
 }
 
 .profile-intro {
-	display: block;
+	display: flex;
+	flex-direction: row;
+	position: absolute;
+	left: 50px;
+	top: 150px;
+	border: 3px solid black;
+}
+
+.profile-intro .info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: left;
+	padding-left: 10px;
+	line-height: 30px;
 }
 
 #profile-button {
