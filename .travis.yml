@@ -1,6 +1,9 @@
 language: node_js
 node_js:
 - "stable"
+before_script:
+- node src/db/tests/build.js
+
 script:
-- node src/tests/tests.js
-- node src/db/tests/tests.js
+- tape src/scripts/tests/tests.js
+- tape src/db/tests/tests.js

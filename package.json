@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:src": "tape src/tests/tests.js",
-    "test:db": "tape src/db/tests/tests.js",
+    "test": "tape src/scripts/tests/tests.js && node src/db/tests/build.js && tape src/db/tests/tests.js",
     "start": "node src/scripts/server.js",
-    "watch": "nodemon src/scripts/server.js",
-    "build:db": "node src/db/database/build.js"
+    "watch": "nodemon src/scripts/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +18,9 @@
     "url": "https://github.com/facg3/FACG3-Book/issues"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "env2": "^2.2.0",
+    "jsonwebtoken": "^8.1.0",
     "nodemon": "^1.12.5",
     "pg": "^7.4.0"
   },
