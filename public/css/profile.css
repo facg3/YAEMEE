@@ -1,18 +1,23 @@
 * {
-  margin: 0;
-  padding: 0;
   font-family: 'Lato', sans-serif;
 }
 
-.profile-intro {
+.profile-intro, .create-post, .posts-container {
   width: 85%;
   height: 250px;
 	display: flex;
 	flex-direction: row;
 	position: absolute;
-	left: 50px;
 	top: 80px;
+  margin: 0 5%;
 	border: 3px solid black;
+}
+
+.profile-image {
+  display: block;
+  margin: 25px 20px;
+  left: 50px;
+  top: 100px;
 }
 
 .profile-intro .info {
@@ -22,4 +27,38 @@
 	text-align: left;
 	padding-left: 10px;
 	line-height: 30px;
+}
+
+.create-post {
+  top: 400px;
+  justify-content: center;
+}
+
+.input-area {
+  width: 80%;
+  height: 90%;
+  border:dotted 2px #4CAF50;
+  font-size: 20px;
+  align-self: center;
+  resize: none;
+}
+
+.submit-post {
+  width: 15%;
+  height: 60px;
+  align-self: center;
+}
+
+.button {
+	border-radius: 5px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 18px 32px;
+	margin: 0 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
 }

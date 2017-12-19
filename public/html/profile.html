@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>YAEMEE - profile</title>
+  <link rel="stylesheet" type="text/css" href="../css/nav.css">
   <link rel="stylesheet" type="text/css" href="../css/profile.css">
   <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon" />
 </head>
@@ -19,14 +20,25 @@
       <input id="profile-button" type="submit" class="nav-button" value="Profile">
       <input type="submit" class="nav-button" value="Log Out">
     </div>
-    <div class="profile-intro">
-      <img width="100px" height="100px" src="../images/personal-img-unkown.png" alt="personal profile image, unkown person">
-      <div class="info">
-        <h3>Username: #myName</h3>
-        <h4>Bio: #Bio</h4>
-        <h4>Date Of Birth: 0\0\1000</h4>
-      </div>
+  </div>
+  <div class="profile-intro">
+    <img width="200px" class="profile-image" height="200px" src="../images/personal-img-unkown.png" alt="personal profile image, unkown person">
+    <div class="info">
+      <h3>Username: #myName</h3>
+      <h4>Bio: #Bio</h4>
+      <h4>Date Of Birth: 0\0\1000</h4>
     </div>
+  </div>
+  <div class="create-post">
+    <textarea class="input-area" name="add-post" rows="8" cols="80" placeholder="What are you thinking of?"></textarea>
+    <input class="submit-post button" type="button" name='add' value='Add Post' />
+  </div>
+  <div class="posts">
+    <!-- Add posts as articles -->
+    <section class="posts-container">
+
+    </section>
+  </div>
 </body>
 
 </html>
