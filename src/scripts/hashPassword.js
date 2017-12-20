@@ -13,7 +13,7 @@ const hashPassword = (cb) => {
 const comparePasswords = (password, hashedPassword, cb) => {
   bcrypt.compare(password, hashedPassword, (err3, res) => {
     if (err3) return cb(err3);
-    return cb(res);
+    return cb(err3, res);
   });
 };
 
