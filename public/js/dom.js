@@ -17,15 +17,16 @@ login.addEventListener('click', (event) => {
     alert('Please enter your username & password');
   } else {
     const reqObject = {
-      method: 'GET',
-      body: logInfo,
+      method: 'POST',
+      body: JSON.stringify(logInfo),
       url: '/login/',
     };
     request(reqObject, (err, res) => {
       if (err) {
-        console.log('eooasodas');
+        console.log(err);
       } else {
-        console.log(res);
+        console.log('ssssssss', res);
+        // window.location.pathname = '/home/';
       }
     });
   }

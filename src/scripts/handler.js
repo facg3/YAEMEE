@@ -1,5 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const createToken = require('./createToken');
+const hashPwd = require('./hashPassword');
+const userQueries = require('../db/queries/user_functions');
 // const post = require('../db/queries/post_functions');
 // const user = require('../db/queries/user_functions');
 
@@ -36,14 +39,60 @@ const generic = (request, response) => {
 };
 
 const login = (req, res) => {
+  console.log('Im back', req.headers.cookie);
+  let userInfo = '';
+  req.on('data', (chunk) => {
+    userInfo += chunk;
+  });
+  req.on('end', () => {
+    const userObject = JSON.parse(userInfo);
+    userQueries.getLoginInfoFromDB(userObject.username, (err, result) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('User_not_found');
+      } else {
+        hashPwd.comparePasswords(userObject.password, result[0].password, (err, result2) => {
+          if (err) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Password_is_wrong');
+          } else {
+            const tokenObject = result;
+            createToken(tokenObject, (err2, token) => {
+              if (err2) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                return res.end('Token_not_set');
+              }
+              console.log('waaawwaawa', token);
+              // res.writeHead(200, { 'Set-Cookie': [`token=${token}`] });
+              res.setHeader('Set-Cookie', 'token=89218938912');
+              res.setHeader('Expires', new Date(Date.now() + 2592000000).toUTCString());
+              res.setHeader('max-Age', '900000');
+              return res.end(token);
+            });
+          }
+        });
+      }
+    });
+  });
+};
 
+const handleHomePage = (req, res) => {
+  fs.readFile(path.join(__dirname, '..', '..', 'public', 'html', 'home.html'), (error, file) => {
+    if (error) {
+      res.writeHead(500, { 'content-Type': 'text/html' });
+      res.end('<h1> Internal server Error </h1>');
+    } else {
+      res.writeHead(200, { 'content-Type': 'text/html' });
+      res.end(file);
+    }
+  });
 };
 
 module.exports = {
   loginPage,
   generic,
   login,
-  // handleHomePage,
+  handleHomePage,
   // profiles,
   // addPost,
   // editPost,
