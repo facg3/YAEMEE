@@ -1,9 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const createToken = require('./createToken');
+const hashPwd = require('./hashPassword');
+const userQueries = require('../db/queries/user_functions');
 // const post = require('../db/queries/post_functions');
 // const user = require('../db/queries/user_functions');
 
-const homePage = (request, response) => {
+const loginPage = (request, response) => {
   fs.readFile(path.join(__dirname, '..', '..', 'public', 'html', 'login.html'), (error, file) => {
     if (error) {
       response.writeHead(500, { 'content-Type': 'text/html' });
@@ -34,10 +37,72 @@ const generic = (request, response) => {
     }
   });
 };
+
+const login = (req, res) => {
+  let userInfo = '';
+  req.on('data', (chunk) => {
+    userInfo += chunk;
+  });
+  req.on('end', () => {
+    const userObject = JSON.parse(userInfo);
+    userQueries.getLoginInfoFromDB(userObject.username, (err1, result) => {
+      if (err1) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('User_not_found');
+      } else {
+        hashPwd.comparePasswords(userObject.password, result[0].password, (err, result2) => {
+          if (err) {
+            console.log('kjlasdkjasdkjds', err);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Password_is_wrong');
+          } else {
+            console.log('result', result2);
+            const tokenObject = result;
+            createToken(tokenObject, (err2, token) => {
+              if (err2) {
+                console.log('err2', err2);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                return res.end('Token_not_set');
+              }
+              res.setHeader('Set-Cookie', [`token=${token}`, 'logged_in=true', `username=${result[0].username}`]);
+              res.setHeader('Content-Type', 'text/html');
+              res.setHeader('X-Foo', 'bar');
+              res.writeHead(200);
+              return res.end();
+            });
+          }
+        });
+      }
+    });
+  });
+};
+
+const handleHomePage = (req, res) => {
+  fs.readFile(path.join(__dirname, '..', '..', 'public', 'html', 'home.html'), (error, file) => {
+    if (error) {
+      res.writeHead(500, { 'content-Type': 'text/html' });
+      res.end('<h1> Internal server Error </h1>');
+    } else {
+      res.writeHead(200, { 'content-Type': 'text/html' });
+      res.end(file);
+    }
+  });
+};
+
+const logOut = (req, res) => {
+  res.writeHead(302, {
+    'Set-Cookie': ['logged_in=false; Max-Age=0;', 'token=1; Max-Age=0;', 'username="0"; Max-Age=0'],
+    Location: '/',
+  });
+  return res.end();
+};
+
 module.exports = {
-  homePage,
+  loginPage,
   generic,
-  // login,
+  login,
+  handleHomePage,
+  logOut,
   // profiles,
   // addPost,
   // editPost,
