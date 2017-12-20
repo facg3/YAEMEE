@@ -16,7 +16,7 @@ INSERT INTO users (username, password, type)
 
 CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
-  user_id REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id),
   contents VARCHAR(1500)
 );
 
@@ -25,8 +25,8 @@ INSERT INTO posts (user_id, contents)
 
 CREATE TABLE likes (
   id SERIAL PRIMARY KEY,
-  post_id REFERENCES posts(id),
-  user_id REFERENCES users(id)
+  post_id INTEGER REFERENCES posts(id),
+  user_id INTEGER REFERENCES users(id)
 );
 
 INSERT INTO likes (post_id, user_id)
@@ -34,8 +34,8 @@ INSERT INTO likes (post_id, user_id)
 
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
-  post_id REFERENCES posts(id),
-  user_id REFERENCES users(id)
+  post_id INTEGER REFERENCES posts(id),
+  user_id INTEGER REFERENCES users(id)
 );
 
 INSERT INTO comments (post_id, user_id)

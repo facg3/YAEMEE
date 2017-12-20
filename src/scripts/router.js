@@ -1,15 +1,17 @@
 const handlers = require('./handler.js');
+const cookieChecker = require('./cookieChecker');
 
 const router = (req, res) => {
   const endpoint = req.url;
+
   if (endpoint === '/') {
-    handlers.homePage(req, res);
-  } else if (endpoint.startsWith('/public/')) {
-    handlers.generic(req, res);
+    cookieChecker(req, res, handlers.loginPage);
   } else if (endpoint === '/login/') {
-    handlers.login(req, res);
-  } else if (endpoint === '/profile/') {
-    handlers.profiles(req, res);
+    cookieChecker(req, res, handlers.login);
+  } else if (endpoint === '/home/') {
+    cookieChecker(req, res, handlers.handleHomePage);
+  } else if (endpoint.startsWith('/public/')) {
+    cookieChecker(req, res, handlers.generic);
   } else if (endpoint === '/add_post/') {
     handlers.addPost(req, res);
   } else if (endpoint === '/edit_post/') {

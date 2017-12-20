@@ -3,7 +3,7 @@ const path = require('path');
 // const post = require('../db/queries/post_functions');
 // const user = require('../db/queries/user_functions');
 
-const homePage = (request, response) => {
+const loginPage = (request, response) => {
   fs.readFile(path.join(__dirname, '..', '..', 'public', 'html', 'login.html'), (error, file) => {
     if (error) {
       response.writeHead(500, { 'content-Type': 'text/html' });
@@ -34,10 +34,16 @@ const generic = (request, response) => {
     }
   });
 };
+
+const login = (req, res) => {
+
+};
+
 module.exports = {
-  homePage,
+  loginPage,
   generic,
-  // login,
+  login,
+  // handleHomePage,
   // profiles,
   // addPost,
   // editPost,

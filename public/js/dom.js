@@ -1,50 +1,32 @@
-function request(cb) {
-  const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4) {
-      if (xhr.status == 200) {
-        cb(JSON.parse(xhr.responseText));
-      } else {
-        cb(`Error Occured!!, on: ${url} with response: ${error}`);
-      }
-    }
-  };
-  xhr.open('POST', '/home', true);
-  xhr.send();
-}
+const select = selector => document.querySelector(selector);
+const create = type => document.createElement(type);
 
-function create(type) {
-  return document.createElement(type);
-}
-
-function displayPosts(data, err) {
-  if (err) {
-    alert(err);
-  }
-  const wrapper = document.querySelector('.wrapper');
-  if (wrapper.textContent) {
-    wrapper.textContent = '';
-  }
-  console.log(data);
-  data.forEach((post) => {
-    const article = create('article');
-    article.className = 'one-post';
-    article.id = post.id;
-    const publisher = create('h1');
-    publisher.className = 'post-publisher';
-    publisher.textContent = post.name;
-    const postParagraph = create('p');
-    postParagraph.className = 'post-content';
-    postParagraph.textContent = post.post;
-    article.appendChild(publisher);
-    article.appendChild(postParagraph);
-    wrapper.appendChild(article);
-  });
-}
-
-
-document.onreadystatechange = function () {
-  if (document.readyState === 'complete') {
-    request(displayPosts);
-  }
+const login = select('.login-btn');
+const guest = select('.guest-btn');
+const catchLogInfo = () => {
+  const username = select('.username').value;
+  const password = select('.password').value;
+  return { username, password };
 };
+
+login.addEventListener('click', (event) => {
+  event.preventDefault();
+  const logInfo = catchLogInfo();
+
+  if (!validateLogin(logInfo.username, logInfo.password)) {
+    alert('Please enter your username & password');
+  } else {
+    const reqObject = {
+      method: 'GET',
+      body: logInfo,
+      url: '/login/',
+    };
+    request(reqObject, (err, res) => {
+      if (err) {
+        console.log('eooasodas');
+      } else {
+        console.log(res);
+      }
+    });
+  }
+});
