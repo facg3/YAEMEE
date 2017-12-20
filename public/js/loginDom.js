@@ -12,21 +12,20 @@ const catchLogInfo = () => {
 login.addEventListener('click', (event) => {
   event.preventDefault();
   const logInfo = catchLogInfo();
-
   if (!validateLogin(logInfo.username, logInfo.password)) {
     alert('Please enter your username & password');
   } else {
     const reqObject = {
       method: 'POST',
       body: JSON.stringify(logInfo),
-      url: '/login/',
+      url: '/login',
+
     };
     request(reqObject, (err, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log('ssssssss', res);
-        // window.location.pathname = '/home/';
+        window.location.pathname = '/home';
       }
     });
   }

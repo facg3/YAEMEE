@@ -6,17 +6,19 @@ const router = (req, res) => {
 
   if (endpoint === '/') {
     cookieChecker(req, res, handlers.loginPage);
-  } else if (endpoint === '/login/') {
+  } else if (endpoint === '/login') {
     cookieChecker(req, res, handlers.login);
-  } else if (endpoint === '/home/') {
+  } else if (endpoint === '/home') {
     cookieChecker(req, res, handlers.handleHomePage);
   } else if (endpoint.startsWith('/public/')) {
     cookieChecker(req, res, handlers.generic);
-  } else if (endpoint === '/add_post/') {
+  } else if (endpoint === '/log-out') {
+    handlers.logOut(req, res);
+  } else if (endpoint === '/add_post') {
     handlers.addPost(req, res);
-  } else if (endpoint === '/edit_post/') {
+  } else if (endpoint === '/edit_post') {
     handlers.editPost(req, res);
-  } else if (endpoint === '/like_post/') {
+  } else if (endpoint === '/like_post') {
     handlers.likePost(req, res);
   } else if (endpoint === '/delete_post/') {
     handlers.deletePost(req, res);

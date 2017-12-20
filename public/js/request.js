@@ -3,20 +3,17 @@ const request = (reqObject, cb) => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        cb(xhr);
-        console.log(xhr.response);
+        cb(xhr.responseText);
       } else {
-        // alert('Error, Something didnt go well.');
+        alert('Error, Something didnt go well.');
       }
     }
   };
   if (reqObject.method === 'GET') {
     xhr.open('GET', reqObject.url, true);
-    xhr.withCredentials = true;
     xhr.send(reqObject.body);
   } else if (reqObject.method === 'POST') {
     xhr.open('POST', reqObject.url, true);
-    xhr.withCredentials = true;
     xhr.send(reqObject.body);
   }
 };
