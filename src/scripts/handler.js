@@ -73,7 +73,7 @@ const login = (req, res) => {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             return res.end('Token_not_set');
           }
-          res.setHeader('Set-Cookie', [`token=${token}`, 'logged_in=true', `username=${result[0].username}`]);
+          res.setHeader('Set-Cookie', [`token=${token}`, 'logged_in=true', `username=${result.username}`]);
           res.setHeader('Content-Type', 'text/html');
           res.setHeader('X-Foo', 'bar');
           res.writeHead(200);
