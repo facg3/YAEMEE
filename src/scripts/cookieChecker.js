@@ -3,7 +3,6 @@ const handlers = require('./handler');
 const cookieChecker = (req, res, cb) => {
   const endpoint = req.url;
   if (!req.headers.cookie && endpoint !== '/' && !endpoint.startsWith('/public/')) {
-    console.log(!req.headers.cookie);
     res.writeHead(302, { location: '/' });
     res.end();
   } else if (req.headers.cookie && endpoint === '/') {
