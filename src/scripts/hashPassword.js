@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 
-const hashPassword = (cb) => {
+const hashPassword = (pwd, cb) => {
   bcrypt.genSalt(10, (err1, salt) => {
-    bcrypt.hash('admin', salt, (err2, hash) => {
+    bcrypt.hash(pwd, salt, (err2, hash) => {
       if (err2) return cb(err2);
       return cb(hash);
     });
