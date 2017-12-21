@@ -48,38 +48,38 @@ const login = (req, res) => {
     userQueries.getLoginInfoFromDB(userObject.username, (err1, result) => {
       if (err1) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end('User_not_found');
-      } else {
-        hashPwd.comparePasswords(userObject.password, result[0].password, (err, result2) => {
-          if (err || !result2) {
-            let statusCode;
-            let msg = '';
-            if (err) {
-              statusCode = 500;
-              msg = 'Server_Error';
-            } else {
-              statusCode = 200;
-              msg = 'Password_is_wrong';
-            }
-            res.writeHead(statusCode, { 'Content-Type': 'text/plain' });
-            res.end(msg);
-          } else {
-            const tokenObject = result;
-            createToken(tokenObject, (err2, token) => {
-              if (err2) {
-                console.log('err2', err2);
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                return res.end('Token_not_set');
-              }
-              res.setHeader('Set-Cookie', [`token=${token}`, 'logged_in=true', `username=${result[0].username}`]);
-              res.setHeader('Content-Type', 'text/html');
-              res.setHeader('X-Foo', 'bar');
-              res.writeHead(200);
-              return res.end();
-            });
-          }
-        });
+        return res.end('Database_Error');
+      } else if (result === 'false_user') {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        return res.end('User_not_found');
       }
+      hashPwd.comparePasswords(userObject.password, result.password, (err, result2) => {
+        if (err || !result2) {
+          let statusCode;
+          let msg = '';
+          if (err) {
+            statusCode = 500;
+            msg = 'Server_Error';
+          } else {
+            statusCode = 200;
+            msg = 'Password_is_wrong';
+          }
+          res.writeHead(statusCode, { 'Content-Type': 'text/plain' });
+          return res.end(msg);
+        }
+        const tokenObject = result;
+        createToken(tokenObject, (err2, token) => {
+          if (err2) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            return res.end('Token_not_set');
+          }
+          res.setHeader('Set-Cookie', [`token=${token}`, 'logged_in=true', `username=${result[0].username}`]);
+          res.setHeader('Content-Type', 'text/html');
+          res.setHeader('X-Foo', 'bar');
+          res.writeHead(200);
+          return res.end();
+        });
+      });
     });
   });
 };
