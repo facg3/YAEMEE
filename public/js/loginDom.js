@@ -23,10 +23,18 @@ login.addEventListener('click', (event) => {
     };
     request(reqObject, (err, res) => {
       if (err) {
-        console.log(err);
-      } else {
-        window.location.pathname = '/home';
+        console.log('error happened',err);
+      } else if (res === 'Password_is_wrong' || res === 'User_not_found'){
+        if(res=='Password_is_wrong') {
+          select('#abc').textContent = 'Wrong Password';
+          select('#abc').style.visibility = 'visible';
+        } else {
+          select('#abc').textContent = 'Wrong username';
+          select('#abc').style.visibility = 'visible';
       }
+    } else {
+      window.location.pathname = '/home';
+    }
     });
   }
 });

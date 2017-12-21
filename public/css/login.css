@@ -58,3 +58,7 @@ body {
 .buttons:hover {
   background-color: lightgreen;
 }
+
+.login-error-message {
+  visibility:hidden;
+}
