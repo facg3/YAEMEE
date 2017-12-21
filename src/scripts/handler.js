@@ -51,12 +51,19 @@ const login = (req, res) => {
         res.end('User_not_found');
       } else {
         hashPwd.comparePasswords(userObject.password, result[0].password, (err, result2) => {
-          if (err) {
-            console.log('kjlasdkjasdkjds', err);
-            res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Password_is_wrong');
+          if (err || !result2) {
+            let statusCode;
+            let msg = '';
+            if (err) {
+              statusCode = 500;
+              msg = 'Server_Error';
+            } else {
+              statusCode = 200;
+              msg = 'Password_is_wrong';
+            }
+            res.writeHead(statusCode, { 'Content-Type': 'text/plain' });
+            res.end(msg);
           } else {
-            console.log('result', result2);
             const tokenObject = result;
             createToken(tokenObject, (err2, token) => {
               if (err2) {
