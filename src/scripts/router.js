@@ -7,7 +7,7 @@ const router = (req, res) => {
   if (endpoint === '/') {
     cookieChecker(req, res, handlers.loginPage);
   } else if (endpoint === '/login') {
-    cookieChecker(req, res, handlers.login);
+    handlers.login(req, res);
   } else if (endpoint === '/home') {
     cookieChecker(req, res, handlers.handleHomePage);
   } else if (endpoint.startsWith('/public/')) {
