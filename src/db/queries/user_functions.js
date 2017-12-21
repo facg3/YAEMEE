@@ -4,10 +4,11 @@ const getLoginInfoFromDB = (username, cb) => {
   const sqlQuery = `SELECT * FROM users WHERE username='${username}'`;
   connect.query(sqlQuery, (err, res) => {
     if (err) {
-      cb(err);
-    } else {
-      cb(null, res.rows);
+      return cb(err);
+    } else if (res.rowCount === 0) {
+      return cb(null, 'false_user');
     }
+    return cb(null, res.rows[0]);
   });
 };
 
