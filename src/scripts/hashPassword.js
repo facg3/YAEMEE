@@ -12,7 +12,11 @@ const hashPassword = (pwd, cb) => {
 
 const comparePasswords = (password, hashedPassword, cb) => {
   bcrypt.compare(password, hashedPassword, (err3, res) => {
-    if (err3) return cb(err3);
+    if (err3) {
+      return cb(err3);
+    } else if (!res) {
+      return cb(null, 'Password_is_wrong');
+    }
     return cb(err3, res);
   });
 };
